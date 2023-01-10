@@ -30,7 +30,7 @@ export const HomePage = (props: IHomePage) => {
         console.log('targetvalue ', event.target.value);
         setSelected(event.target.value);
         console.log('selected', selected);
-        let api =  `https://opentdb.com/api.php?amount=10&category=23&difficulty=${event.target.value}&type=multiple`
+        let api =  `https://opentdb.com/api.php?amount=10&category=23&difficulty=${event.target.value}&type=multiple&encode=base64`
         console.log('api', api);
         fetch(`${api}`)
         .then(res => res.json()) 
