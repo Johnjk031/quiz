@@ -27,23 +27,19 @@ export const HomePage = (props: IHomePage) => {
 
 
     const getData = (event: ITarget) => {
-        console.log('targetvalue ', event.target.value);
         setSelected(event.target.value);
-        console.log('selected', selected);
         let api =  `https://opentdb.com/api.php?amount=10&category=23&difficulty=${event.target.value}&type=multiple&encode=base64`
-        console.log('api', api);
         fetch(`${api}`)
         .then(res => res.json()) 
         .then(result => {
-          console.log('we are here ', result);
           setQuestions(result.results)
           dispatch(addQuestions(result.results))
         })
       }
 
     return (
-        <div>
-            <select value={selected} onChange={getData}>
+        <div className="main-background">
+        <select value={selected} onChange={getData}>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.text}

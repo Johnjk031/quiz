@@ -11,3 +11,70 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.header {
+  background-color: black;
+  color: white;
+  height: 2.6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main-background {
+  background-color: #65A1BA;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+select {
+  height: 2rem;
+  border-radius: 5px;
+  background-color: bisque;
+}
+.answers {
+  background-color: #65A1BA;
+  height: 2rem;
+  min-width: 11rem;
+  border-radius: 20px;
+  border: none;
+  color: white;
+}
+.answer-span {
+  margin-top: 0.5rem;
+}
+.answer-list {
+  list-style-type: none;
+  display: inline-flex; /* -- only change --*/
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+ul {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px;
+}
+.list-answers {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  height: 75px;
+}
+.questionBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+svg {
+  width: 1rem;
+  fill:#65A1BA;
+}
+.clicked {
+color: black;
+}

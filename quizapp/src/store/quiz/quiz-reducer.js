@@ -26,7 +26,6 @@ const quizReducer = (state = INITAL_STATE, action, props) => {
             }
             
  case actionTypes.ADD_ANSWER:
-     console.log('current state', state.answers);
      if(!state.answers.includes(action.payload)) {
         return {
             ...state,

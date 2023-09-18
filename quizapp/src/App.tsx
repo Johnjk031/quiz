@@ -14,8 +14,7 @@ export interface IAppProps {};
 const App = (props: IAppProps) => {
   return (
     <div>
-  <header className="header"></header>
-  <p>test</p>
+  <header className="header">Meny</header>
    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />

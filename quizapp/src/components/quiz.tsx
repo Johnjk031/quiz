@@ -4,6 +4,7 @@ import store from '../store/store'
 import { useDispatch, connect, useSelector } from 'react-redux'
 import { RootState } from '../store/quiz/quiz-reducer'
 import { Link } from "react-router-dom";
+import { ResultPage } from './results';
 
 export interface IQuizPage {}
 
@@ -19,100 +20,124 @@ export interface IAnswerCollection {
 answer: string;
 correct: string;
 }
+const answersCollection: IAnswerCollection[] = [];
+let chosenAnswer: string = ''
 
 export const QuizPage = (props: IQuizPage) => {
     
     const [questionCount, setQuestionCount] = useState(0);
     const [finished, setFinished] = useState(false);
-    // const [answ, setAnsw] = useState('');
+    const [nextDisabled, setNextDisabled] = useState(true);
+    const [shuffled, setShuffled] = useState(['']);
+    const [answer, setChosenAnswer] = useState('');
     
-    let answObj: Object[]
+    let isFirstQuestion: Boolean;
+    
+    // const [answ, setAnswObj] = useState([]);
+    
     const dispatch = useDispatch<AppDispatch>();
-    let shuffled: string[] = []
     const questions: ICurQuest[] = useSelector<RootState, ICurQuest[]>((state: any) => state.quiz.questions)
     let answers: string[] = []
     const currentQuestion = questions[questionCount]
     
     const renderOptions = () => {
-        console.log('rendering answers', currentQuestion);   
-        if (currentQuestion !== undefined) {
-            console.log('is not undefined', currentQuestion);
-            currentQuestion.incorrect_answers.forEach(item => {
+      
+        
+        if (questions[questionCount] !== undefined) {          
+          questions[questionCount].incorrect_answers.forEach(item => {
               answers.push(item)
             });
-           answers.push(currentQuestion.correct_answer)
-           shuffled = answers
+           answers.push(questions[questionCount].correct_answer)
+           setShuffled(answers
         .map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value)
-          }
-        console.log('shuffled', shuffled);
-    } 
+        .map(({ value }) => value))
+      }
+  } 
+  const setCurrentQuestionAnswer = () => {
+    console.log('answersCollection[questionCount]?.answer ', answersCollection[questionCount]?.answer, ' count: ', questionCount);
+    setChosenAnswer(answersCollection[questionCount]?.answer)
+  }
+  useEffect(() => {
+    isFirstQuestion = true;
     renderOptions();
+    setCurrentQuestionAnswer()
+  }, [questionCount]);
 
-  const setNext = () => {
-    if (questions[questionCount]) {
-        console.log('answ:', 'correct_answer', questions[questionCount].correct_answer);
-        
-      setQuestionCount(questionCount + 1)
-      console.log(questionCount);
-      
+      const setNext = () => {
+      isFirstQuestion = false
+      setNextDisabled(true)
+    if (questions[questionCount + 1]) {      
+      setQuestionCount(count => count + 1)          
     } else {
       setFinished(true)
-      console.log('finished', finished);
     }
     }
-    const setAnsw = (ans: any) => {   
-             
-        console.log('setting answer', atob(ans), 'corAns', atob(currentQuestion.correct_answer));
-        let obj: IAnswerCollection = {answer: atob(ans), correct: atob(currentQuestion.correct_answer)}
-        console.log('obj', obj);
-        // if (answObj[questionCount]) {
-        //     console.log('removing', questionCount);
-            
-        //     answObj.splice(questionCount, 1)   
-        // }
-        answObj = [...answObj, obj]
-        console.log(answObj);
-         
+
+    const setAnsw = (ans: any) => {
+      console.log('ans ', ans);
+      
+      setNextDisabled(false)
+      setChosenAnswer(ans)      
+        let obj: IAnswerCollection = {answer: atob(ans), correct: atob(questions[questionCount].correct_answer)}
+        if (!answersCollection[questionCount]) {
+            answersCollection[questionCount] = obj;
+        }
+        else {
+          answersCollection[questionCount] = obj;
+        }
+        chosenAnswer = atob(ans)
+      }
+
+    const decreaseCount = (state: any, props: any) => {
+      return {...state, questionCount: state.questionCount - 1};
     }
+
+    const setPrev = () => {  
+  setQuestionCount(count => count - 1)
+  // renderOptions();
+}
 
     return (
         <div>
-            <p>
-            QuizPage
-            </p>
-            { Object.keys(questions).length && questions[questionCount] ? 
-            <div> 
-            
-            {atob(questions[questionCount].question)}
-
-            <ul className="answer-list">
-    {shuffled.map((answer, index) => (  
-          <li key={index}>  
-  <input onClick={() => setAnsw(answer)}
-     type="button"
-     className="answers"
-     value={atob(answer)}
-     name="answer"
-     />
-          </li>  
-        ))}
-    </ul>
-    <button>Privious</button>
+      { !finished ? 
+      <div> 
+      <div className="main-background">
+      {atob(questions[questionCount]?.question)}
+      </div>
+      <ul className="answer-list">
+  {shuffled.map((answer, index) => (  
+    <li className="list-answers" key={index} onClick={() => setAnsw(answer)}>  
+      <div className="answer-span">
+        <input
+          type="button"
+          className={`answers ${atob(answer) === answersCollection[questionCount]?.answer ? 'answeredText' : ''}`}
+          value={atob(answer)}
+          name="answer"
+        />
+      </div>
+    </li>  
+  ))}
+</ul>
+    <div className="questionBtns">
+     <button className="nextAndPrev" onClick={setPrev} disabled={questionCount === 0}>
+     <svg className={"nextAndPrevSvg" + (questionCount === 0 ? 'disabled' : '')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+     </button>
     {questionCount}
-    <span onClick={setNext}>next</span>
+    <button className="nextAndPrev" onClick={setNext} disabled={answersCollection[questionCount]?.answer === undefined}>
+    <svg className={"nextAndPrevSvg" + (answersCollection[questionCount]?.answer === undefined ? 'disabled' : '')} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+    </button>
+    </div>
             </div>
-          
             :
             <div>
              <nav>
             <Link to="/">Go back</Link>
           </nav>
+          <div><p>We are finished</p></div>
+          <ResultPage answers={answersCollection} />
             </div>
           }
-     {finished ? <div><p>We are finished</p></div> : ''
-      }
         </div>
     )
 }
