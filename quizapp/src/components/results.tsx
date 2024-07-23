@@ -1,6 +1,7 @@
 import {useState} from "react";
 import { useDispatch} from "react-redux";
 import { addQuestions } from '../store/quiz/quiz-actions'
+import { useNavigate } from 'react-router-dom';
 import {
     Link,
   } from "react-router-dom";
@@ -22,6 +23,7 @@ return (
         <div>
         Result is displayed here 
       <p>{correctAmount}</p> 
+      <Link to="/userInfo">Add to result</Link>
         </div>
     )
 }

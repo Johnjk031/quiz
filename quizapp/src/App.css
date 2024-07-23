@@ -53,3 +53,8 @@
     transform: rotate(360deg);
   }
 }
+.svg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

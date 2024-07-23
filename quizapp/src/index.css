@@ -17,7 +17,11 @@ code {
   height: 2.6rem;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: end;
+}
+.user {
+  cursor: pointer;
+  margin-right: 2rem;
 }
 .main-background {
   background-color: #65A1BA;
