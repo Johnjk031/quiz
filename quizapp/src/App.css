@@ -58,3 +58,32 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+
+
+.user-options-container {
+  position: relative;  
+  display: inline-block;
+}
+
+.user-options {
+  position: absolute;
+  top: 100%;   
+  left: -50px; 
+  background: white;
+  color: #282c34;
+  border: 1px solid #ccc;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 4px;
+  z-index: 1000;
+}
+ul {
+  list-style-type: none;
+}
+.user-options li a {
+  text-decoration: none;
+  color: inherit;
+}
+.user-options li {
+  cursor: pointer;
+}

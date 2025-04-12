@@ -18,6 +18,7 @@ code {
   display: flex;
   flex-direction: row;
   justify-content: end;
+  align-items: center;
 }
 .user {
   cursor: pointer;

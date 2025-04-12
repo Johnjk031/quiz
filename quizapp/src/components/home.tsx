@@ -15,7 +15,7 @@ export interface ITarget {
 export const HomePage = (props: IHomePage) => {
 
     const options = [
-        {value: '', text: '--Choose an option--'},
+        {value: '', text: 'Select difficulty'},
         {value: 'easy', text: 'easy'},
         {value: 'medium', text: 'medium'},
         {value: 'hard', text: 'hard'},
