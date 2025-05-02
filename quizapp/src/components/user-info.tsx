@@ -24,7 +24,7 @@ export function UserInfo() {
           }
         });
       
-        return () => unsubscribe();  // Clean up listener on unmount
+        return () => unsubscribe();
       }, []);
 
   return (
