@@ -16,41 +16,18 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import axios from 'axios';
+
 
 function App() {
 
 const auth = getAuth();
 const [logedin, setLogedin] = useState(false);
-const [userInfo, setUserInfo] = useState(null);
 const [userOptionsOpen, setUserOptionsOpen] = useState(false);
 const userOptionsRef = useRef<HTMLDivElement>(null);
 
 
-const usersCollectionRef = collection(db, "userinfo");
+// const usersCollectionRef = collection(db, "userinfo");
 
-useEffect(() => {
-  axios.get('http://localhost:5000/api/userdata')
-    .then(response => {
-      setUserInfo(response.data);
-      console.log("userinfo: ", response.data);
-    })
-    .catch(error => {
-      console.error("There was an error making the request!", error);
-    });
-}, []);
-
-
-
-
-// useEffect(() => {
-//   const getUsers = async () => {
-//     const data = await getDocs(usersCollectionRef);
-//     console.log("DATA: ", data);
-//   };
-
-//   getUsers();
-// }, []);
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
     if (userOptionsRef.current && !userOptionsRef.current.contains(event.target as Node)) {

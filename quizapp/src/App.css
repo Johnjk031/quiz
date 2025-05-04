@@ -87,3 +87,9 @@ ul {
 .user-options li {
   cursor: pointer;
 }
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
