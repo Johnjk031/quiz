@@ -37,7 +37,7 @@ return (
         <div>
         Result is displayed here 
       <p>{correctAmount}</p> 
-      <button onClick={handleAddScore}>Add to result</button>;
+      <button onClick={handleAddScore}>Publish score to results board</button>
         </div>
     )
 }

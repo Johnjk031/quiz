@@ -11,7 +11,6 @@ export function UserInfo() {
   const [userInfo, setUserInfo] = useState(null);
   const [average, setAverage] = useState(0);
 
-  const percentage = 75;
 
 const maxValue = 100;
   const calculateAverage = (results: number[]) => {
@@ -27,7 +26,7 @@ const maxValue = 100;
         setUserInfo(response.data);
         const avg = calculateAverage(response.data[0].results);
         console.log("avg: ", avg)
-        setAverage(avg);
+        setAverage(Number(avg.toFixed(2)));
       })
       .catch(error => {
         console.error("There was an error making the request!", error);
